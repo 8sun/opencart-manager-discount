@@ -1,0 +1,149 @@
+<!--
+/**
+ * History VQmod
+ * The full description is in the root of a package
+ * 
+ * @copyright (c) 2016, 8sun Empire
+ * @license https://opensource.org/licenses/mit-license.php The MIT License (MIT)
+ * @author Simon Bran
+ * @version 0.9.0
+ * @package opencart_1.5.x_statuses
+ */
+-->
+<?xml version="1.0" encoding="UTF-8"?>
+<modification>
+    <id>a order discount and history package</id>
+    <version>0.9.0</version>
+    <vqmver>2.0</vqmver>
+    <author>8sun Empire</author>
+
+    <file name="admin/controller/sale/order.php">
+        <operation>
+            <search position="after"><![CDATA[
+            $this->model_sale_order->editOrder($this->request->get['order_id'], $this->request->post);
+            ]]></search>
+            <add><![CDATA[
+            $this->request->post['notify'] = 1;
+            $this->model_sale_order->addOrderHistory($this->request->get['order_id'], $this->request->post);
+            ]]></add>
+        </operation>
+    </file>
+    
+    <file name="catalog/controller/account/order.php">
+        <operation>
+            <search position="after"><![CDATA[public function info() { ]]></search>
+            <add><![CDATA[$this->language->loadAll('account/history', $this->data);]]></add>
+        </operation>
+    </file> 
+		
+    <file name="catalog/view/theme/oxy/template/account/order_info.tpl">
+        <operation>
+            <search position="after"><![CDATA[<div class="right"><a href="<?php echo $continue; ?>" class="button"><?php echo $button_continue; ?></a></div>]]></search>
+            <add><![CDATA[
+<a data="15" id="order-status-close" class="button order-status-send"><?php echo $button_close; ?></a>
+<a data="7" id="order-status-cancel" class="button order-status-send"><?php echo $button_cancel; ?></a>
+<div id="order-info"><?php echo $text_info; ?></div>
+]]></add>
+        </operation>
+        <operation>
+            <search position="replace" index="5"><![CDATA[<table class="list">]]></search>
+            <add><![CDATA[
+<table class="list" id="history">
+]]></add>
+        </operation>
+        <operation>
+            <search position="after"><![CDATA[<?php echo $footer; ?>]]></search>
+            <add><![CDATA[
+                
+<script>
+    $(document).ready(function () {
+
+        getStatus();
+
+        $('.order-status-send').on('click', function () {
+            o = $(this).attr('data');
+            data = {'order_status_id':o,'notify':'1','append':'0','comment':''}
+            $.ajax({
+                url: '/index.php?route=account/history&order_id=<?php echo $order_id; ?>',
+                type: 'post',
+                data: data,
+                dataType: 'json',
+                beforeSend: function () {
+                    $('#history').after('<span class="wait">&nbsp;<img src="/catalog/view/image/loading.gif" alt="" /></span>');
+                },
+                complete: function () {
+                    $('.wait').remove();
+                },
+                success: function (json) {
+                    if(json['error']) {
+                        $('#history').after('<div class="warning">'+json["error"]+'</div>');
+                    } else if(json['answer']) {
+                        toggleButtons(json['answer']['order_status_id']);
+                        html = "<tr>"
+                                + "<td class='left'>" + json['answer']['date_added'] + "</td>"
+                                + "<td class='left'>" + json['answer']['status'] + "</td>"
+                                + "<td class='left'>" + json['answer']['comment'] + "</td>"
+                                + "</tr>";
+
+                        $('#history tbody tr:last-child').after(html);
+                    }
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    console.log(thrownError + "/r/n" + xhr.statusText + "/r/n" + xhr.responseText);
+                }
+            });
+        });
+    });
+
+    function toggleButtons(j) {
+        if (j == '15' || j == '7') {
+            $('#order-status-close, #order-status-cancel, #order-info').removeClass('show');
+        } else {
+            $('#order-status-close, #order-status-cancel, #order-info').addClass('show');
+        }
+    }
+
+    function getStatus() {
+        data = {};
+        $.ajax({
+            url: '/index.php?route=account/history/status&order_id=<?php echo $order_id; ?>',
+            type: 'post',
+            data: data,
+            dataType: 'json',
+            beforeSend: function () {
+                $('#history').after('<span class="wait">&nbsp;<img src="/catalog/view/image/loading.gif" alt="" /></span>');
+            },
+            complete: function () {
+                $('.wait').remove();
+            },
+            success: function (json) {
+                toggleButtons(json['answer']['order_status_id']);
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                console.log(thrownError + "/r/n" + xhr.statusText + "/r/n" + xhr.responseText);
+            }
+        });
+    }
+</script>
+<style>
+    a.order-status-send, div#order-info {
+        display: none; 
+    }
+    a.show, div#order-info.show {
+        display: inline-block;
+    }
+    div#order-info {
+        color: #545454;
+        background: #f6f6f6;
+        padding: 5px;
+        border-radius: 5px;
+        border: 1px solid #eaeaea;
+        clear: both;
+        float: left;
+        margin:10px 0;
+    }
+</style>
+            ]]></add>
+        </operation>
+    </file> 
+</modification>

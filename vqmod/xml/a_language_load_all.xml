@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * LoadAll VQmod
+ * Loading all messages of the current language
+ * 
+ * @copyright (c) 2016, 8sun Empire
+ * @license https://opensource.org/licenses/mit-license.php The MIT License (MIT)
+ * @author Simon Bran
+ * @version 1.0
+ * @package opencart_1.5.x
+ */
+-->
+<modification>
+    <id>LoadAll Language</id>
+    <version>1.0</version>
+    <vqmver>2.0</vqmver>
+    <author>8sun Empire</author>
+
+    <file name="system/library/language.php">
+        <operation>
+            <search position="before"><![CDATA[public function load($filename)]]></search>
+            <add><![CDATA[
+    public function loadAll($filename, &$array = null)
+    {
+        $file = DIR_LANGUAGE . $this->directory . '/' . $filename . '.php';
+
+        if (file_exists($file)) {
+            $_ = array();
+
+            require($file);
+
+            $this->data = array_merge($this->data, $_);
+            if (is_array($array)) {
+                foreach ($_ as $k => $t)
+                    $array[$k] = $t;
+            }
+
+            return $this->data;
+        }
+
+        $file = DIR_LANGUAGE . $this->default . '/' . $filename . '.php';
+
+        if (file_exists($file)) {
+            $_ = array();
+
+            require($file);
+
+            $this->data = array_merge($this->data, $_);
+
+            return $this->data;
+        } else {
+            trigger_error('Error: Could not load language ' . $filename . '!');
+            // exit();
+        }
+    }
+            ]]></add>
+        </operation>
+    </file>
+</modification>
