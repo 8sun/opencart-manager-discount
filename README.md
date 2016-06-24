@@ -1,4 +1,4 @@
-Order Status And History
+Opencart Manager Discount
 ========
 
 
@@ -18,6 +18,6 @@ Copyright (c) 2016, 8sun Empire
 Description
 -----------
 
-The given package is intended for work of the customer and the manager with  statuses of the order. 
+The given package is intended for work of the customer and the manager with statuses of the order. 
 The package is developed 8 sun Empire Studio 
 and includes additional extension about purpose of the discount by the manager.
