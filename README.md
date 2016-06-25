@@ -1,6 +1,7 @@
 Opencart Manager Discount
 ========
 
+### WARNING! The package is unstable and soon will be upgraded
 
 >*author* Simon Bran
 
