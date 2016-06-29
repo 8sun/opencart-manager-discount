@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!--
 /**
  * History VQmod
@@ -6,14 +7,13 @@
  * @copyright (c) 2016, 8sun Empire
  * @license https://opensource.org/licenses/mit-license.php The MIT License (MIT)
  * @author Simon Bran
- * @version 0.9.0
+ * @version 1.0
  * @package opencart_1.5.x_statuses
  */
 -->
-<?xml version="1.0" encoding="UTF-8"?>
 <modification>
     <id>a order discount and history package</id>
-    <version>0.9.1</version>
+    <version>1.0</version>
     <vqmver>2.0</vqmver>
     <author>8sun Empire</author>
     
@@ -50,20 +50,18 @@
         </operation>
     </file> 
 		
-    <file name="catalog/view/theme/oxy/template/account/order_info.tpl">
+    <file name="catalog/view/theme/*/template/account/order_info.tpl">
         <operation>
-            <search position="after"><![CDATA[<div class="right"><a href="<?php echo $continue; ?>" class="button"><?php echo $button_continue; ?></a></div>]]></search>
+            <search position="after" offset="1"><![CDATA[<div class="buttons">]]></search>
             <add><![CDATA[
-<a data="15" id="order-status-close" class="button order-status-send"><?php echo $button_close; ?></a>
-<a data="7" id="order-status-cancel" class="button order-status-send"><?php echo $button_cancel; ?></a>
+    <a data="15" id="order-status-close" class="order-status-send"><?php echo $button_close; ?></a>
+    <a data="7" id="order-status-cancel" class="order-status-send"><?php echo $button_cancel; ?></a>
 <div id="order-info"><?php echo $text_info; ?></div>
 ]]></add>
         </operation>
         <operation>
-            <search position="replace" index="5"><![CDATA[<table class="list">]]></search>
-            <add><![CDATA[
-<table class="list" id="history">
-]]></add>
+            <search position="replace" index="5"><![CDATA[<table class="list]]></search>
+            <add><![CDATA[<table id="history" class="list]]></add>
         </operation>
         <operation>
             <search position="after"><![CDATA[<?php echo $footer; ?>]]></search>

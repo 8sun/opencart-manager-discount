@@ -56,16 +56,6 @@
 				url: '<?php echo $store_url; ?>index.php?route=checkout/manual&token=<?php echo $token; ?>' + '&order_id=<?php echo $this->request->get["order_id"]; ?>',                        
 			]]></add>
         </operation>
-        <operation>
-            <search position="after"><![CDATA[html += '  <td class="left">' + product['model'] + '</td>';]]></search>
-            <add><![CDATA[
-				html += '  <td class="left" width="90">' + product['product_id'] + '</td>';
-			]]></add>
-        </operation>
-        <operation>
-            <search position="replace"><![CDATA[html += '  <td class="right" colspan="4">]]></search>
-            <add><![CDATA[html += '  <td class="right" colspan="5">]]></add>
-        </operation>
     </file> 
 
     <file name="catalog/controller/checkout/cart.php">

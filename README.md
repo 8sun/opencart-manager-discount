@@ -1,11 +1,9 @@
 Opencart Manager Discount
 ========
 
-### WARNING! The package is unstable and soon will be upgraded
-
 >*author* Simon Bran
 
->*version* 0.9.0
+>*version* 1.0 Stable
 
 >*package* opencart_1.5.x_statuses
 

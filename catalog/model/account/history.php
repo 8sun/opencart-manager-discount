@@ -7,7 +7,7 @@
  * @copyright (c) 2016, 8sun Empire
  * @license https://opensource.org/licenses/mit-license.php The MIT License (MIT)
  * @author Simon Bran
- * @version 0.9.0
+ * @version 1.0
  * @package opencart_1.5.x_statuses
  */
 class ModelAccountHistory extends Model
