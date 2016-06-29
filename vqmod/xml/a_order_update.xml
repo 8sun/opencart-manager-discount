@@ -13,9 +13,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <modification>
     <id>a order discount and history package</id>
-    <version>0.9.0</version>
+    <version>0.9.1</version>
     <vqmver>2.0</vqmver>
     <author>8sun Empire</author>
+    
+    <file name="system/library/config.php">
+        <operation>
+            <search position="after"><![CDATA[private $data = array();]]></search>
+            <add><![CDATA[
+    public $status = array(
+        'Closed' => '15',
+        'Canceled' => '7',
+        'Pending' => '1',
+        'Processing' => '2',
+    );
+            ]]></add>
+        </operation>
+    </file>
 
     <file name="admin/controller/sale/order.php">
         <operation>
@@ -96,7 +110,7 @@
     });
 
     function toggleButtons(j) {
-        if (j == '15' || j == '7') {
+        if (j == '<?php echo $this->config->status["Closed"]; ?>' || j == '<?php echo $this->config->status["Canceled"]; ?>' || j == '<?php echo $this->config->status["Pending"]; ?>') {
             $('#order-status-close, #order-status-cancel, #order-info').removeClass('show');
         } else {
             $('#order-status-close, #order-status-cancel, #order-info').addClass('show');

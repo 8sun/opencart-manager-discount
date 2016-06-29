@@ -6,7 +6,7 @@
  * @copyright (c) 2016, 8sun Empire
  * @license https://opensource.org/licenses/mit-license.php The MIT License (MIT)
  * @author Simon Bran
- * @version 0.9.0
+ * @version 0.9.1
  * @package opencart_1.5.x_statuses
  */
 class ControllerAccountHistory extends Controller
@@ -74,7 +74,7 @@ class ControllerAccountHistory extends Controller
     {
         $this->load->model('account/history');
         $history_model = $this->model_account_history->getOrderHistoryByOrder($order_id);
-        if ($history_model['order_status_id'] == 15 || $history_model['order_status_id'] == 7) {
+        if ($history_model['order_status_id'] == $this->config->status["Closed"] || $history_model['order_status_id'] == $this->config->status["Canceled"]) {
             return false;
         } else {
             return true;
