@@ -32,4 +32,4 @@ public $status = array(
 );
 ```
 
-Where a key is description of the status and a value is *order_status_id*
+Where is a key is description of the status and a value is *order_status_id*
