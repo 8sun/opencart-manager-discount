@@ -1,9 +1,9 @@
 Opencart Manager Discount
 ========
 
->*author* Simon Bran
+>*author* Simon Brân
 
->*version* 1.0 Stable
+>*version* 1.1 Stable
 
 >*package* opencart_1.5.x_statuses
 
@@ -17,11 +17,9 @@ Copyright (c) 2016, 8sun Empire
 Description
 -----------
 
-The given package is intended for work of the customer and the manager with statuses of the order. 
-The package is developed 8 sun Empire Studio 
-and includes additional extension about purpose of the discount by the manager.
+The package is intended for a work of customers and the managers with statuses of an  order. The package was developed 8 sun Empire Studio and includes additional extension with which a manager can assign discounts to users. 
 
->Note: For correct work it is necessary to set the id statuses of orders in the file: `a_order_update.xml`
+>Note: For the correct work it is necessary to set the ids (status) of orders in the file: `a_order_update.xml`
 
 ```
 public $status = array(
@@ -32,4 +30,4 @@ public $status = array(
 );
 ```
 
-Where is a key is description of the status and a value is *order_status_id*
+Where the key is the description of the status and the value is *order_status_id*
